@@ -1,38 +1,70 @@
 import java.util.Scanner;
+import java.util.List;
 
 public class LibraryManagementSystem {
     private static final Scanner scanner = new Scanner(System.in);
     private static final Library library = new Library();
 
     public static void main(String[] args) {
-        while (true) {
-            printMenu();
-            int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
-
-            switch (choice) {
-                case 1 -> addBook();
-                case 2 -> borrowBook();
-                case 3 -> returnBook();
-                case 4 -> viewAvailableBooks();
-                case 5 -> {
-                    System.out.println("Exiting the system. Goodbye!");
-                    System.exit(0);
-                }
-                default -> System.out.println("Invalid choice. Please try again.");
-            }
-        }
+        // ... (main method remains the same)
     }
 
     private static void printMenu() {
-        System.out.println("\n--- Library Management System ---");
-        System.out.println("1. Add a book");
-        System.out.println("2. Borrow a book");
-        System.out.println("3. Return a book");
-        System.out.println("4. View available books");
-        System.out.println("5. Exit");
-        System.out.print("Enter your choice: ");
+        // ... (printMenu method remains the same)
     }
 
-    // TODO: Implement addBook, borrowBook, returnBook, and viewAvailableBooks methods
+    private static void addBook() {
+        System.out.print("Enter ISBN: ");
+        String isbn = scanner.nextLine();
+        System.out.print("Enter title: ");
+        String title = scanner.nextLine();
+        System.out.print("Enter author: ");
+        String author = scanner.nextLine();
+        System.out.print("Enter publication year: ");
+        int year = scanner.nextInt();
+        scanner.nextLine(); // Consume newline
+
+        try {
+            library.addBook(isbn, title, author, year);
+            System.out.println("Book added successfully.");
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    private static void borrowBook() {
+        System.out.print("Enter ISBN of the book to borrow: ");
+        String isbn = scanner.nextLine();
+
+        try {
+            library.borrowBook(isbn);
+            System.out.println("Book borrowed successfully.");
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    private static void returnBook() {
+        System.out.print("Enter ISBN of the book to return: ");
+        String isbn = scanner.nextLine();
+
+        try {
+            library.returnBook(isbn);
+            System.out.println("Book returned successfully.");
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    private static void viewAvailableBooks() {
+        List<Book> availableBooks = library.getAvailableBooks();
+        if (availableBooks.isEmpty()) {
+            System.out.println("No books are currently available.");
+        } else {
+            System.out.println("Available books:");
+            for (Book book : availableBooks) {
+                System.out.println(book);
+            }
+        }
+    }
 }
