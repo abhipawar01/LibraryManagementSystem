@@ -14,5 +14,7 @@ public class Book {
     public String getTitle() { return title; }
     public String getAuthor() { return author; }
     public int getPublicationYear() { return publicationYear; }
+    public boolean isAvailable() { return isAvailable; }
+    public void setAvailable(boolean available) { isAvailable = available; }
     // TODO: Add getters and setters
 }
