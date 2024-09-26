@@ -1,5 +1,7 @@
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Library {
     private Map<String, Book> books;
@@ -33,6 +35,11 @@ public class Library {
             throw new IllegalStateException("Book with ISBN " + isbn + " is already available.");
         }
         book.setAvailable(true);
+    }
+    public List<Book> getAvailableBooks() {
+        return books.values().stream()
+                .filter(Book::isAvailable)
+                .collect(Collectors.toList());
     }
 
     // TODO: Add methods for adding, borrowing, and returning books
