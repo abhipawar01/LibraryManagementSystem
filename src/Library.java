@@ -13,6 +13,27 @@ public class Library {
         }
         books.put(isbn, new Book(isbn, title, author, publicationYear));
     }
+    public void borrowBook(String isbn) {
+        Book book = books.get(isbn);
+        if (book == null) {
+            throw new IllegalArgumentException("Book with ISBN " + isbn + " does not exist.");
+        }
+        if (!book.isAvailable()) {
+            throw new IllegalStateException("Book with ISBN " + isbn + " is not available.");
+        }
+        book.setAvailable(false);
+    }
+
+    public void returnBook(String isbn) {
+        Book book = books.get(isbn);
+        if (book == null) {
+            throw new IllegalArgumentException("Book with ISBN " + isbn + " does not exist.");
+        }
+        if (book.isAvailable()) {
+            throw new IllegalStateException("Book with ISBN " + isbn + " is already available.");
+        }
+        book.setAvailable(true);
+    }
 
     // TODO: Add methods for adding, borrowing, and returning books
 }
